@@ -1,0 +1,154 @@
+# ================================================
+# PARKWHIZZ DEPLOYMENT CHECKLIST
+# ================================================
+
+## ONE-LINE DEPLOYMENT SEQUENCE
+```
+Setup MongoDB Atlas → Configure SendGrid → Setup Google OAuth → Set Railway Env Vars → Deploy Backend → Set Vercel Env Vars → Deploy Frontend → Test → Go Live
+```
+
+## DETAILED DEPLOYMENT STEPS
+
+### PHASE 1: PREREQUISITES (30 minutes)
+□ Create MongoDB Atlas account and cluster
+□ Create SendGrid account and get API key
+□ Create Google Cloud project and OAuth credentials
+□ Create Railway account
+□ Create Vercel account
+□ Install Railway CLI: `npm install -g @railway/cli`
+□ Install Vercel CLI: `npm install -g vercel`
+
+### PHASE 2: MONGODB ATLAS SETUP (10 minutes)
+□ Go to https://cloud.mongodb.com
+□ Create new cluster (Free M0 tier)
+□ Create database user (username + password)
+□ Add IP whitelist: 0.0.0.0/0 (allow from anywhere)
+□ Get connection string:
+  Format: mongodb+srv://<username>:<password>@<cluster>.mongodb.net/Parkwhizz?retryWrites=true&w=majority
+□ URL-encode password if it contains special characters
+□ Test connection with MongoDB Compass (optional)
+
+### PHASE 3: SENDGRID SETUP (15 minutes)
+□ Go to https://sendgrid.com
+□ Create account and verify email
+□ Create API Key (Settings → API Keys)
+□ Verify sender email (Settings → Sender Authentication)
+□ Note down:
+  - SMTP Host: smtp.sendgrid.net
+  - SMTP Port: 587
+  - Username: apikey
+  - Password: <your-api-key>
+
+### PHASE 4: GOOGLE OAUTH SETUP (15 minutes)
+□ Go to https://console.cloud.google.com
+□ Create new project or select existing
+□ Enable Google+ API
+□ Go to Credentials → Create OAuth 2.0 Client ID
+□ Application type: Web application
+□ Authorized JavaScript origins:
+  - http://localhost:3000 (local)
+  - https://your-frontend.vercel.app (production)
+□ Authorized redirect URIs:
+  - http://localhost:3000 (local)
+  - https://your-frontend.vercel.app (production)
+□ Note down Client ID and Client Secret
+
+### PHASE 5: BACKEND DEPLOYMENT - RAILWAY (20 minutes)
+□ Push code to GitHub
+□ Go to https://railway.app
+□ Create new project → Deploy from GitHub
+□ Select your repository
+□ Railway will auto-detect Spring Boot
+□ Add environment variables:
+  
+  SPRING_DATA_MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/Parkwhizz?retryWrites=true&w=majority
+  SPRING_MAIL_HOST=smtp.sendgrid.net
+  SPRING_MAIL_PORT=587
+  SPRING_MAIL_USERNAME=apikey
+  SPRING_MAIL_PASSWORD=<sendgrid-api-key>
+  GOOGLE_CLIENT_ID=<your-google-client-id>
+  GOOGLE_CLIENT_SECRET=<your-google-client-secret>
+  JWT_SECRET=<generate-with: openssl rand -base64 64>
+  CORS_ALLOWED_ORIGINS=https://your-frontend.vercel.app
+  PORT=9090
+
+□ Deploy and wait for build
+□ Note down Railway URL: https://your-app.railway.app
+□ Test: curl https://your-app.railway.app/api/parking/all
+
+### PHASE 6: FRONTEND DEPLOYMENT - VERCEL (15 minutes)
+□ Go to https://vercel.com
+□ Import Git Repository
+□ Select your repository
+□ Framework Preset: Vite
+□ Root Directory: frontend
+□ Add environment variables:
+  
+  VITE_API_BASE_URL=https://your-backend.railway.app
+  VITE_GOOGLE_CLIENT_ID=<your-google-client-id>
+
+□ Deploy
+□ Note down Vercel URL: https://your-app.vercel.app
+□ Update Google OAuth redirect URIs with Vercel URL
+
+### PHASE 7: TESTING (15 minutes)
+□ Run test script: ./scripts/test-deploy.sh https://your-backend.railway.app
+□ Test frontend: https://your-frontend.vercel.app
+□ Test user registration
+□ Test user login
+□ Test Google OAuth login
+□ Create test booking
+□ Verify email received
+□ Test booking cancellation
+□ Verify cancellation email
+
+### PHASE 8: CUSTOM DOMAIN (Optional, 30 minutes)
+□ Purchase domain (e.g., parkwhizz.com)
+□ Vercel: Add custom domain for frontend
+  - parkwhizz.com → frontend
+□ Railway: Add custom domain for backend
+  - api.parkwhizz.com → backend
+□ Update CORS_ALLOWED_ORIGINS in Railway
+□ Update VITE_API_BASE_URL in Vercel
+□ Update Google OAuth redirect URIs
+
+### PHASE 9: MONITORING & MAINTENANCE
+□ Setup Railway logs monitoring
+□ Setup Vercel analytics
+□ Setup MongoDB Atlas monitoring
+□ Setup SendGrid email analytics
+□ Create backup strategy
+□ Document rollback procedure
+
+## ROLLBACK PROCEDURE
+If deployment fails:
+1. Railway: Rollback to previous deployment (Deployments → Select previous → Redeploy)
+2. Vercel: Rollback to previous deployment (Deployments → Select previous → Promote to Production)
+3. Check logs: Railway logs, Vercel logs, MongoDB Atlas logs
+4. Verify environment variables
+5. Test locally with production env vars
+
+## COST ESTIMATES
+- MongoDB Atlas M0: FREE
+- SendGrid Free: 100 emails/day FREE
+- Railway: $5/month (500 hours)
+- Vercel: FREE (hobby tier)
+- Domain: $10-15/year (optional)
+
+Total: $5/month + domain (optional)
+
+## SCALING RECOMMENDATIONS
+When you outgrow free tiers:
+1. MongoDB Atlas: Upgrade to M10 ($57/month) for better performance
+2. SendGrid: Upgrade to Essentials ($19.95/month) for 50k emails
+3. Railway: Upgrade to Pro ($20/month) for better resources
+4. Vercel: Upgrade to Pro ($20/month) for team features
+5. Add Redis for caching (Railway add-on)
+6. Add CDN for static assets (Cloudflare)
+
+## SUPPORT & TROUBLESHOOTING
+- Railway Logs: railway logs
+- Vercel Logs: vercel logs
+- MongoDB Logs: Atlas → Clusters → Metrics
+- SendGrid Logs: Activity Feed
+- GitHub Actions: Actions tab in repository

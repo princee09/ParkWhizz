@@ -1,0 +1,19 @@
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@YOUR_CLUSTER.mongodb.net/Parkwhizz?retryWrites=true&w=majority&appName=Cluster0
+      database: Parkwhizz
+      auto-index-creation: true
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: YOUR_GOOGLE_CLIENT_ID
+
+

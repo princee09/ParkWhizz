@@ -1,0 +1,44 @@
+# Build artifacts
+target/
+*.jar
+*.war
+*.ear
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# Environment files
+.env
+.env.*
+application.properties
+application.yml
+!application.properties.example
+!application.yml.example
+
+# Firebase credentials
+parkbuzzPushNotification.json
+!parkbuzzPushNotification.json.example
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+
+# Test files
+src/test/
+
+# Maven wrapper (optional - include if you want faster builds)
+.mvn/
+mvnw
+mvnw.cmd
