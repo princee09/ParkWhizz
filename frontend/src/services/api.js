@@ -138,6 +138,23 @@ export const authService = {
                 }
             } catch (error) {
                 console.error('Failed to fetch user details after Google login:', error);
+                // Fallback: decode email from token and store basic info
+                try {
+                    const base64Url = token.split('.')[1];
+                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                    const jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function (c) {
+                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                    }).join(''));
+                    const { email, name, picture } = JSON.parse(jsonPayload);
+
+                    localStorage.setItem('user', JSON.stringify({
+                        email,
+                        name: name || email.split('@')[0],
+                        profilePicture: picture
+                    }));
+                } catch (e) {
+                    console.error('Failed to parse token for fallback:', e);
+                }
             }
         }
         return response.data;
