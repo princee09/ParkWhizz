@@ -23,15 +23,26 @@ public class FirebaseConfig {
 
     @Bean
     public FirebaseApp initializeFirebase() throws IOException {
-        Resource resource = resourceLoader.getResource("classpath:parkbuzzPushNotification.json");
-        InputStream serviceAccount = resource.getInputStream();
+        try {
+            Resource resource = resourceLoader.getResource("classpath:parkbuzzPushNotification.json");
+            
+            // Check if resource exists
+            if (!resource.exists()) {
+                System.out.println("Firebase config not found - push notifications disabled");
+                return null;
+            }
+            
+            InputStream serviceAccount = resource.getInputStream();
 
 //        FileInputStream serviceAccount =
 //                new FileInputStream("src/main/resources/parkbuzzPushNotification.json");
-        FirebaseOptions options;
-       options = new FirebaseOptions.Builder()
-               .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-               .build();
-       return FirebaseApp.initializeApp(options);
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .build();
+            return FirebaseApp.initializeApp(options);
+        } catch (Exception e) {
+            System.out.println("Firebase initialization failed - push notifications disabled: " + e.getMessage());
+            return null;
+        }
     }
 }
