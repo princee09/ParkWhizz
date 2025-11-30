@@ -42,10 +42,11 @@ public class SecuiryConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests( authorizeHttpRequests->authorizeHttpRequests
                         .requestMatchers(
-                                "/parkbuzz/api/v1/user/update/{email}",
-                                "/parkbuzz/api/v1/user/login",
-                                "/parkbuzz/api/v1/user/google-login",
-                                "/parkbuzz/api/v1/user/register",
+                                "/parkbuzz/api/v1/user/**",
+                                "/parkbuzz/api/v1/parking/**",
+                                "/parkbuzz/api/v1/spot/**",
+                                "/parkbuzz/api/v1/booking/**",
+                                "/parkbuzz/api/v1/admin/**",
                                 "/parkbuzz/api/v1/cronjob",
                                 "/parkbuzz/api/v1/generate")
                         .permitAll().anyRequest().authenticated())
@@ -61,7 +62,12 @@ public class SecuiryConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://parkbuzz-admin.vercel.app","http://localhost:9090"));
+        configuration.setAllowedOrigins(Arrays.asList(
+                "https://parkwhizz-frontend.onrender.com",
+                "http://localhost:3000",
+                "http://localhost:5173",
+                "https://parkbuzz-admin.vercel.app"
+        ));
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE"));
         configuration.setAllowedHeaders(Arrays.asList("Content-Type","Authorization"));
         configuration.setExposedHeaders(Arrays.asList("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
