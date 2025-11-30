@@ -1,99 +1,82 @@
 # 🚗 ParkWhizz - Smart Parking Reservation System
 
-A full-stack parking reservation platform built with React and Spring Boot, featuring real-time availability, secure bookings, and automated email notifications.
+A modern full-stack parking reservation platform built with React and Spring Boot. Find, book, and manage parking spots across India with real-time availability and secure payments.
 
-[![Frontend CI/CD](https://github.com/YOUR_USERNAME/parkwhizz/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/parkwhizz/actions/workflows/frontend-ci.yml)
-[![Backend CI/CD](https://github.com/YOUR_USERNAME/parkwhizz/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/YOUR_USERNAME/parkwhizz/actions/workflows/backend-ci.yml)
 
 ## ✨ Features
 
-- 🔍 **Smart Search** - Browse and search parking locations across India
+- 🔍 **Smart Search** - Browse parking locations across major Indian cities
 - 📅 **Real-time Availability** - Check spot availability for specific time slots
-- 💳 **Secure Bookings** - JWT-based authentication and secure payment flow
-- 👤 **User Profiles** - Manage personal information and booking history
-- 📧 **Email Notifications** - Automated booking confirmations and cancellations
-- 🔐 **Google OAuth** - Quick sign-in with Google account
-- 📱 **Responsive Design** - Works seamlessly on desktop and mobile
-- 🎨 **Modern UI** - Glassmorphic design with smooth animations
+- 💳 **Secure Bookings** - JWT-based authentication and encrypted transactions
+- 👤 **User Profiles** - Manage personal information and view booking history
+- 📧 **Email Notifications** - Automated booking confirmations via SendGrid
+- 🔐 **Google OAuth** - Quick and secure sign-in with Google
+- 📱 **Responsive Design** - Seamless experience across all devices
+- 🎨 **Modern UI** - Glassmorphic design with smooth animations using Framer Motion
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **React 18** - UI library
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Utility-first CSS framework
-- **Framer Motion** - Animation library
-- **React Router** - Client-side routing
-- **Axios** - HTTP client
+- React 18 + Vite
+- Tailwind CSS + Framer Motion
+- React Router v6
+- Axios + Google OAuth
 
 ### Backend
-- **Spring Boot 3** - Java framework
-- **MongoDB** - NoSQL database
-- **Spring Security** - Authentication & authorization
-- **JWT** - Stateless authentication
-- **Google OAuth 2.0** - Social login
-- **JavaMail** - Email notifications
-- **Firebase** - Push notifications (optional)
+- Spring Boot 3.2.2
+- MongoDB (Spring Data MongoDB)
+- Spring Security + JWT
+- JavaMail + SendGrid
+- Firebase Admin SDK
 
-### DevOps
-- **Docker** - Containerization
-- **GitHub Actions** - CI/CD pipelines
-- **Railway** - Backend hosting
-- **Vercel** - Frontend hosting
-- **MongoDB Atlas** - Database hosting
+### DevOps & Deployment
+- Docker + Docker Compose
+- GitHub Actions CI/CD
+- Render.com (Free hosting)
+- MongoDB Atlas (Free tier)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
+- Node.js 20+
+- Java 17+
+- Maven 3.8+
+- MongoDB (local or Atlas)
 
-- **Node.js** 20+ and npm
-- **Java** 17+
-- **Maven** 3.8+
-- **MongoDB** (local or Atlas)
-- **Git**
-
-### Local Development Setup
+### Local Development
 
 #### 1. Clone the Repository
-
 ```bash
-git clone https://github.com/YOUR_USERNAME/parkwhizz.git
-cd parkwhizz
+git clone https://github.com/princee09/ParkWhizz.git
+cd ParkWhizz
 ```
 
 #### 2. Backend Setup
-
 ```bash
 # Copy example config
 cp src/main/resources/application.properties.example src/main/resources/application.properties
 
-# Edit application.properties with your values
+# Edit with your credentials:
 # - MongoDB URI
-# - Email credentials (Gmail or SendGrid)
+# - SendGrid API key
 # - Google OAuth credentials
 # - JWT secret
 
 # Run backend
 ./mvnw spring-boot:run
-
-# Or with Maven
-mvn clean spring-boot:run
 ```
 
-Backend will start on `http://localhost:9090`
+Backend starts on `http://localhost:9090`
 
 #### 3. Frontend Setup
-
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
 
-# Copy example env file
-cp .env.example .env.local
+# Copy env file
+cp .env.example .env
 
-# Edit .env.local
+# Edit .env:
 # VITE_API_BASE_URL=http://localhost:9090
 # VITE_GOOGLE_CLIENT_ID=your-google-client-id
 
@@ -101,283 +84,151 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Frontend will start on `http://localhost:3000`
+Frontend starts on `http://localhost:5173`
 
-### Using Docker Compose
+## 🌐 Production Deployment
 
-```bash
-# Create .env file with your credentials
-cp .env.example .env
+We provide a **100% FREE** deployment solution using:
+- **Frontend**: Render Static Site
+- **Backend**: Render Web Service
+- **Database**: MongoDB Atlas (512MB free)
+- **Email**: SendGrid (100 emails/day free)
 
-# Edit .env file with your values
+### Quick Deploy
 
-# Start all services (MongoDB + Backend + Frontend)
-docker-compose up
-
-# Stop all services
-docker-compose down
-```
-
-## 📦 Production Deployment
-
-### One-Line Deployment Sequence
-
-```
-MongoDB Atlas → SendGrid → Google OAuth → Railway Backend → Vercel Frontend → Test → Live
-```
-
-### Detailed Deployment Guide
-
-See [deploy/checklist.txt](deploy/checklist.txt) for step-by-step instructions.
-
-### Quick Deploy Commands
-
-#### Deploy Backend to Railway
-
-```bash
-# Install Railway CLI
-npm install -g @railway/cli
-
-# Login
-railway login
-
-# Link project
-railway link
-
-# Set environment variables (see deploy/environment-variables.md)
-railway variables set SPRING_DATA_MONGODB_URI="your-mongodb-uri"
-railway variables set SPRING_MAIL_PASSWORD="your-sendgrid-api-key"
-# ... set all other variables
-
-# Deploy
-railway up
-```
-
-#### Deploy Frontend to Vercel
-
-```bash
-# Install Vercel CLI
-npm install -g vercel
-
-# Login
-vercel login
-
-# Deploy
-cd frontend
-vercel --prod
-
-# Set environment variables in Vercel dashboard
-# VITE_API_BASE_URL=https://your-backend.railway.app
-# VITE_GOOGLE_CLIENT_ID=your-google-client-id
-```
-
-## 🔧 Configuration
+Follow our comprehensive deployment guide:
+- 📖 [Render Deployment Guide](./render-deployment-guide.md)
+- 📋 [Environment Variables Reference](./deploy/environment-variables.md)
+- ✅ [Deployment Checklist](./deploy/checklist.txt)
 
 ### Environment Variables
 
-See [deploy/environment-variables.md](deploy/environment-variables.md) for complete reference.
-
-#### Backend (Railway/Production)
-
-```bash
-SPRING_DATA_MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/Parkwhizz
+#### Backend (Render)
+```env
+SPRING_DATA_MONGODB_URI=mongodb+srv://...
 SPRING_MAIL_HOST=smtp.sendgrid.net
-SPRING_MAIL_PORT=587
 SPRING_MAIL_USERNAME=apikey
-SPRING_MAIL_PASSWORD=SG.your-sendgrid-api-key
-GOOGLE_CLIENT_ID=your-google-client-id
-GOOGLE_CLIENT_SECRET=your-google-client-secret
-JWT_SECRET=your-long-random-secret
-CORS_ALLOWED_ORIGINS=https://your-frontend.vercel.app
+SPRING_MAIL_PASSWORD=SG.your-api-key
+GOOGLE_CLIENT_ID=your-client-id
+GOOGLE_CLIENT_SECRET=your-client-secret
+JWT_SECRET=your-64-char-secret
+CORS_ALLOWED_ORIGINS=https://your-frontend.onrender.com
 ```
 
-#### Frontend (Vercel/Production)
-
-```bash
-VITE_API_BASE_URL=https://your-backend.railway.app
+#### Frontend (Render)
+```env
+VITE_API_BASE_URL=https://your-backend.onrender.com
 VITE_GOOGLE_CLIENT_ID=your-google-client-id
 ```
 
-### MongoDB Atlas Setup
+## 📚 API Documentation
 
-1. Create account at [cloud.mongodb.com](https://cloud.mongodb.com)
-2. Create cluster (Free M0 tier)
-3. Create database user
-4. Whitelist IP: `0.0.0.0/0`
-5. Get connection string
-6. URL-encode password if it contains special characters
+### Authentication
+- `POST /api/auth/login` - Email/password login
+- `POST /api/auth/register` - User registration
+- `POST /api/auth/google` - Google OAuth login
 
-### SendGrid Setup
+### Parking Locations
+- `GET /api/parking/all` - List all parking locations
+- `GET /api/parking/{id}` - Get parking details
+- `GET /api/parking/city/{city}` - Search by city
 
-1. Create account at [sendgrid.com](https://sendgrid.com)
-2. Verify sender email
-3. Create API Key
-4. Use in environment variables:
-   - Host: `smtp.sendgrid.net`
-   - Port: `587`
-   - Username: `apikey`
-   - Password: `<your-api-key>`
+### Bookings
+- `POST /api/bookings` - Create booking
+- `GET /api/bookings` - Get user bookings
+- `DELETE /api/bookings/{id}` - Cancel booking
 
-### Google OAuth Setup
+### Spots
+- `GET /api/spots/parking/{parkingId}` - Get spots for parking
+- `POST /api/spots/check-availability` - Check availability
 
-1. Go to [console.cloud.google.com](https://console.cloud.google.com)
-2. Create project
-3. Enable Google+ API
-4. Create OAuth 2.0 credentials
-5. Add authorized origins and redirect URIs
-6. Copy Client ID and Secret
+## 🔐 Security Features
+
+- JWT-based stateless authentication
+- Password encryption with BCrypt
+- CORS configuration for production
+- Google OAuth 2.0 integration
+- Input validation and sanitization
+- Secure email delivery via SendGrid
 
 ## 🧪 Testing
 
-### Run Deployment Tests
-
+### Backend Tests
 ```bash
-# Make script executable
-chmod +x scripts/test-deploy.sh
-
-# Test local deployment
-./scripts/test-deploy.sh http://localhost:9090
-
-# Test production deployment
-./scripts/test-deploy.sh https://your-backend.railway.app https://your-frontend.vercel.app
+./mvnw test
 ```
 
-### Manual API Testing
-
+### Frontend Tests
 ```bash
-# Health check
-curl https://your-backend.railway.app/actuator/health
-
-# Get all parkings
-curl https://your-backend.railway.app/api/parking/all
-
-# Register user
-curl -X POST https://your-backend.railway.app/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"first_name":"John","last_name":"Doe","email":"john@example.com","password":"password123","mobileNo":"1234567890"}'
-
-# Login
-curl -X POST https://your-backend.railway.app/api/auth/login \
-  -H "Content-Type: application/json" \
-  -d '{"email":"john@example.com","password":"password123"}'
+cd frontend
+npm run test
 ```
 
-## 📁 Project Structure
+### E2E Testing
+```bash
+# After deployment
+./scripts/test-deploy.sh https://your-frontend-url.com
+```
+
+## � Project Structure
 
 ```
-parkwhizz/
-├── frontend/                  # React frontend
+ParkWhizz/
+├── frontend/                 # React application
 │   ├── src/
-│   │   ├── components/       # Reusable UI components
-│   │   ├── pages/            # Page components
-│   │   ├── services/         # API integration
-│   │   └── main.jsx          # Entry point
-│   ├── .env.example          # Environment variables template
+│   │   ├── components/      # Reusable UI components
+│   │   ├── pages/           # Page components
+│   │   ├── services/        # API clients
+│   │   └── index.css        # Global styles
 │   └── package.json
-├── src/main/java/            # Spring Boot backend
-│   └── com/parkwhizz/
-│       ├── controller/       # REST API controllers
-│       ├── model/            # Data models
-│       ├── repository/       # MongoDB repositories
-│       ├── service/          # Business logic
-│       ├── security/         # JWT & OAuth
-│       └── config/           # Configuration
-├── src/main/resources/
-│   ├── application-template.properties  # Env-based config
-│   └── application.properties.example   # Local dev template
-├── .github/workflows/        # CI/CD pipelines
-├── deploy/                   # Deployment guides
-├── scripts/                  # Utility scripts
-├── Dockerfile                # Backend container
-├── docker-compose.yml        # Local dev environment
-└── README.md
+├── src/                     # Spring Boot application
+│   └── main/
+│       ├── java/com/parkwhizz/
+│       │   ├── config/      # Security, CORS, OAuth
+│       │   ├── controller/  # REST controllers
+│       │   ├── model/       # MongoDB entities
+│       │   ├── repository/  # Data access layer
+│       │   ├── security/    # JWT, authentication
+│       │   └── service/     # Business logic
+│       └── resources/
+│           ├── application.properties.example
+│           └── parkbuzzPushNotification.json.example
+├── deploy/                  # Deployment guides
+├── .github/workflows/       # CI/CD pipelines
+├── docker-compose.yml       # Local development
+└── Dockerfile              # Backend container
 ```
-
-## 🔐 Security
-
-- ✅ JWT-based stateless authentication
-- ✅ Password hashing with BCrypt
-- ✅ CORS protection
-- ✅ Environment-based secrets
-- ✅ SQL injection prevention (MongoDB)
-- ✅ XSS protection
-- ✅ HTTPS in production
-- ✅ Secure headers
-- ✅ Rate limiting (recommended for production)
-
-## 📊 Monitoring & Logs
-
-### Railway Logs
-
-```bash
-railway logs
-```
-
-### Vercel Logs
-
-```bash
-vercel logs
-```
-
-### MongoDB Atlas Metrics
-
-Go to Atlas → Clusters → Metrics
-
-## 🔄 Rollback Procedure
-
-If deployment fails:
-
-1. **Railway**: Deployments → Select previous → Redeploy
-2. **Vercel**: Deployments → Select previous → Promote to Production
-3. Check logs for errors
-4. Verify environment variables
-5. Test locally with production env vars
-
-## 💰 Cost Breakdown
-
-| Service | Free Tier | Paid Tier |
-|---------|-----------|-----------|
-| MongoDB Atlas | M0 (512MB) | M10 ($57/mo) |
-| SendGrid | 100 emails/day | Essentials ($19.95/mo) |
-| Railway | $5 credit | $5/mo (500 hours) |
-| Vercel | Unlimited | Pro ($20/mo) |
-| **Total** | **~$5/mo** | **~$100/mo** |
-
-## 📈 Scaling Recommendations
-
-When you outgrow free tiers:
-
-1. **Database**: Upgrade to MongoDB Atlas M10
-2. **Email**: Upgrade to SendGrid Essentials
-3. **Caching**: Add Redis (Railway add-on)
-4. **CDN**: Add Cloudflare for static assets
-5. **Load Balancer**: Add Railway load balancer
-6. **Monitoring**: Add Sentry for error tracking
 
 ## 🤝 Contributing
 
+Contributions are welcome! Please follow these steps:
+
 1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## 📝 License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🆘 Support
+## 👨‍💻 Author
 
-- 📧 Email: support@parkwhizz.com
-- 🐛 Issues: [GitHub Issues](https://github.com/YOUR_USERNAME/parkwhizz/issues)
-- 📖 Docs: [deploy/checklist.txt](deploy/checklist.txt)
+**Kumar Prince**
+- GitHub: [@princee09](https://github.com/princee09)
 
 ## 🙏 Acknowledgments
 
-- Icons by [Heroicons](https://heroicons.com/)
-- UI inspiration from modern parking apps
-- Built with ❤️ using React and Spring Boot
+- Icons from [Heroicons](https://heroicons.com/)
+- Design inspiration from modern UI/UX patterns
+- MongoDB Atlas for database hosting
+- Render.com for free application hosting
+
+## 📧 Support
+
+For support, email kp198237@gmail.com or open an issue on GitHub.
 
 ---
 
-**Made with ❤️ by Your Name**
+**Made with ❤️ in India** 🇮🇳
