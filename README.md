@@ -218,17 +218,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 **Kumar Prince**
 - GitHub: [@princee09](https://github.com/princee09)
 
-## 🙏 Acknowledgments
-
-- Icons from [Heroicons](https://heroicons.com/)
-- Design inspiration from modern UI/UX patterns
-- MongoDB Atlas for database hosting
-- Render.com for free application hosting
-
 ## 📧 Support
 
 For support, email kp198237@gmail.com or open an issue on GitHub.
-
----
-
-**Made with ❤️ in India** 🇮🇳
